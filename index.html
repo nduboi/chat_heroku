@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat SocketIo</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap" rel="stylesheet">
     <style>
         #messages{
             border: 1px solid black;
@@ -23,10 +28,19 @@
         }
     </style>
 </head>
-<body>
+<body class="h-screen w-screen dark:bg-slate-800">
+    <h1 class="h-1/6 flex justify-center items-center text-white " id="chatfont">Chat</h1>
     <div id="messages"></div>
-    <input type="text" name="message" id="message" placeholder="Entrez votre message">
-    <button type="submit" onclick="send()" id="send">Envoyer</button>
+    <div class=" flex w-full  ">
+        <input  id="message" class="w-3/4 m-1 border-orange-300 text-2xl rounded-xl border-2">
+        <button onclick="send()" class="w-1/4 m-1 border-orange-300 border-2 rounded-xl bg-white">Envoyer</button>
+    </div>
+    <div class="relative">
+        <div class="">
+            <ul id="messages" class="p-5 list-inside list-none text-white">
+            </ul>
+        </div>
+    </div>
     <script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
     <script>       
         const socket = io();
@@ -64,5 +78,14 @@
 
         }
     </script>
+
+<style>
+    #chatfont{
+        font-family: 'Pacifico', cursive;
+    }
+    #messages{
+        font-family: 'Montserrat', sans-serif;
+    }
+</style>
 </body>
 </html>
