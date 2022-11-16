@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat SocketIo</title>
+    <style>
+        #messages{
+            border: 1px solid black;
+            height: 90vh;
+        }
+        #messages p{
+            margin: 0;
+            padding: 10px;
+        }
+        #messages :nth-child(odd){
+            background-color: #ccc;
+        }
+        form{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div id="messages"></div>
+    <form>
+        <input type="text" name="name" id="name" placeholder="Votre Nom">
+        <input type="text" name="message" id="message" placeholder="Entrez votre message">
+        <button type="submit" id="send">Envoyer</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        window.onload = () => {
+            document.querySelector("form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                const name = document.querySelector("#name");
+                const message = document.querySelector("#message");
+                socket.emit("chat message", {name : name.value, message : message.value});
+                name.value = "";
+                
+            });
+            socket.on("chat message", (msg)=>{
+                document.querySelector("#messages").innerHTML += `<p><b>${msg.name}</b> : ${msg.message}</p>`;
+                
+            })
+
+        }
+    </script>
+</body>
+</html>
