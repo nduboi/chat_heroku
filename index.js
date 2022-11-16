@@ -7,7 +7,9 @@ app.get("/", (req, res) => {
 })
 
 io.on("connection", (socket) => {
-    console.log(socket.id);
+    socket.on("Joueur conecter", pseudo => {
+        console.log("Utilisateur : " + pseudo + " connecter"); 
+    })
     socket.on("disconnect", () => {
         console.log("déconnecté");
     })
