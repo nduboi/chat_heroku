@@ -32,8 +32,9 @@
     <h1 class="h-1/6 flex justify-center items-center text-white " id="chatfont">Chat</h1>
     <div id="messages"></div>
     <div class=" flex w-full  ">
-        <input  id="message" class="w-3/4 m-1 border-orange-300 text-2xl rounded-xl border-2">
+        <input  id="message" class="w-2/4 m-1 border-orange-300 text-2xl rounded-xl border-2">
         <button onclick="send()" class="w-1/4 m-1 border-orange-300 border-2 rounded-xl bg-white">Envoyer</button>
+        <button onclick="deco()" class="w-1/4 m-1 border-orange-300 border-2 rounded-xl bg-white">Quitté</button>
     </div>
     <div class="relative">
         <div class="">
@@ -44,6 +45,7 @@
     <script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
     <script>       
         const socket = io();
+        var fenetreOuverte;
         var name = $_GET('name');
         if (name == 'null') {
             window.location.href = "https://google.fr";
@@ -72,12 +74,22 @@
         window.onload = () => {
             
             socket.on("chat message", (msg)=>{
-                document.querySelector("#messages").innerHTML += `<p class="text-white pl-2"><b>${msg.name}</b> : ${msg.message}</p>`;
-                
+                document.querySelector("#messages").innerHTML += `<p class="text-white pl-2"><b>${msg.name}</b> : ${msg.message}</p>`; 
+            })
+            socket.on("rejoint", (message)=>{
+                document.querySelector("#messages").innerHTML += `<p class="text-white pl-2"><b>`+message+`</b></p>`; 
             })
 
+            socket.on("leave", (message)=>{
+                document.querySelector("#messages").innerHTML += `<p class="text-white pl-2"><b>`+message+`</b></p>`; 
+            })
         }
-    </script>
+        var deco = function(){
+            socket.emit("deconexion", name);
+            window.location.href = "https://google.fr";
+        }
+        
+</script>
 
 <style>
     #chatfont{

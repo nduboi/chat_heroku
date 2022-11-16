@@ -9,9 +9,16 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
     socket.on("Joueur conecter", pseudo => {
         console.log("Utilisateur : " + pseudo + " connecter"); 
+        var join = pseudo +" a rejoint le chat"
+        io.emit("rejoint", join);
     })
     socket.on("disconnect", () => {
         console.log("déconnecté");
+    })
+    socket.on("deconexion", pseudo => {
+        console.log("Utilisateur : " + pseudo + " déconnecter"); 
+        var deconexion = pseudo + " a quitter le chat"
+        io.emit("leave", deconexion);
     })
     socket.on("chat message", (msg) =>{
         io.emit("chat message", msg);
