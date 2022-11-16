@@ -51,10 +51,10 @@
         }else{
             socket.emit('Joueur conecter', name);
         }
-        
+
         const socket = io();
         window.onload = () => {
-            var send = function(){
+            function send(){
                 name = $_GET('name');
                 var message = document.getElementById('message');
                 socket.emit("chat message", {name : name, message : message.value});
