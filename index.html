@@ -50,13 +50,14 @@
             }
             return vars;
         }
-        window.onload = () => {
-            function send(){
+        function send(){
                 name = $_GET('name');
                 var message = document.getElementById('message');
                 socket.emit("chat message", {name : name, message : message.value});
                 message = '';
             }
+        window.onload = () => {
+            
             socket.on("chat message", (msg)=>{
                 document.querySelector("#messages").innerHTML += `<p><b>${msg.name}</b> : ${msg.message}</p>`;
                 
