@@ -53,7 +53,7 @@
         var send = function(){
             var message = document.getElementById('message');
             socket.emit("chat message", {name : name, message : message.value});
-            message = '';
+            message.value = '';
         }
         window.onload = () => {
             
