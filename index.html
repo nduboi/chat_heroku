@@ -28,8 +28,15 @@
     <input type="text" name="message" id="message" placeholder="Entrez votre message">
     <button type="submit" onclick="send()" id="send">Envoyer</button>
     <script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
-    <script>
-         function $_GET(param) {
+    <script>       
+        const socket = io();
+        var name = $_GET('name');
+        if (name == 'null') {
+            window.location.href = "https://google.fr";
+        }else{
+            socket.emit('Joueur conecter', name);
+        }
+        function $_GET(param) {
             var vars = {};
             window.location.href.replace( location.hash, '' ).replace( 
                 /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
@@ -43,16 +50,6 @@
             }
             return vars;
         }
-
-        
-        var name = $_GET('name');
-        if (name == 'null') {
-            window.location.href = "https://google.fr";
-        }else{
-            socket.emit('Joueur conecter', name);
-        }
-
-        const socket = io();
         window.onload = () => {
             function send(){
                 name = $_GET('name');
